@@ -1,115 +1,257 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>UNIQU Restaurant</title>
-
+<title>UNIQUE Restaurant</title>
 <style>
-body {
-    font-family: Arial;
-    background: #f5f5f5;
-    display: flex;
-    justify-content: center;
+body{
+  margin:0;
+  font-family:Arial,Tahoma;
+  background:#07111f;
+  color:white;
+  display:flex;
+  justify-content:center;
 }
-
-.container {
-    background: white;
-    padding: 20px;
-    margin-top: 40px;
-    border-radius: 15px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+.app{
+  width:390px;
+  min-height:100vh;
+  background:#081426;
+  padding:25px;
 }
-
-h1 {
-    color: #e74c3c;
+.logo{
+  text-align:center;
+  color:#d9b48f;
+  font-size:32px;
+  letter-spacing:6px;
+  margin-top:35px;
 }
-
-button {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #ff6b6b;
-    color: white;
-    cursor: pointer;
+.card{
+  background:#111d31;
+  border-radius:18px;
+  padding:18px;
+  margin:15px 0;
 }
-
-button:hover {
-    background: #e74c3c;
+input{
+  width:90%;
+  padding:15px;
+  border-radius:14px;
+  border:1px solid #26364f;
+  background:#121f35;
+  color:white;
+  margin:10px 0;
 }
-
-input {
-    padding: 10px;
-    width: 90%;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+button{
+  border:none;
+  border-radius:15px;
+  padding:13px 18px;
+  background:#7b4bd6;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin:6px;
+}
+.option,.item,.paybox{
+  border:1px solid #2b3855;
+  border-radius:16px;
+  padding:14px;
+  margin:10px 0;
+  background:#121f35;
+}
+.option:hover,.paybox:hover{
+  border-color:#8a5cff;
+}
+.items{
+  display:flex;
+  gap:10px;
+}
+.item{
+  flex:1;
+  text-align:center;
+}
+.price{
+  color:#d9b48f;
+}
+.hidden{display:none;}
+.total{
+  color:#b78cff;
+  font-size:24px;
+  font-weight:bold;
+}
+.nav{
+  display:flex;
+  justify-content:space-around;
+  margin-top:20px;
+  color:#aaa;
 }
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div class="container">
+<!-- Login Screen -->
+<div id="loginScreen">
+  <div class="logo">UNIQUE</div>
+  <p style="text-align:center;color:#d9b48f;">RESTAURANT</p>
+  <h2 style="text-align:center;">مرحباً بك</h2>
+  <p style="text-align:center;color:#aaa;">سجل الدخول للمتابعة</p>
 
-<h1>🍽️ UNIQU Restaurant</h1>
-<p style="color:gray;">Smart Ordering System</p>
+  <div class="card">
+    <input id="username" placeholder="اسم المستخدم">
+    <input id="password" type="password" placeholder="كلمة المرور">
+    <button style="width:95%;" onclick="login()">تسجيل الدخول</button>
+  </div>
+</div>
 
-<h3>Login</h3>
-<input type="text" id="name" placeholder="Enter your name">
-<button onclick="login()">Login</button>
+<!-- Home Screen -->
+<div id="homeScreen" class="hidden">
+  <div class="logo">UNIQUE</div>
 
-<hr>
+  <div class="card">
+    <b>📍 الموقع الحالي</b>
+    <p>شارع العليا، الرياض</p>
+    <button onclick="alert('تم تغيير الموقع')">تغيير الموقع</button>
+  </div>
 
-<h3>Menu</h3>
-<button onclick="addItem(20)">🍔 Burger (20)</button>
-<button onclick="addItem(30)">🍕 Pizza (30)</button>
-<button onclick="addItem(10)">🥤 Drink (10)</button>
+  <h3>اختر نوع الطلب</h3>
+  <div class="items">
+    <div class="option" onclick="selectType('توصيل')">🛵<br>توصيل<br><small>يصل لباب بيتك</small></div>
+    <div class="option" onclick="selectType('سفري')">🛍️<br>سفري<br><small>استلام من المطعم</small></div>
+    <div class="option" onclick="selectType('محلي')">🍽️<br>محلي<br><small>تناول في المطعم</small></div>
+  </div>
 
-<h3>Your Order</h3>
-<p id="total">Total: 0 SAR</p>
+  <p id="orderTypeText" style="color:#b78cff;"></p>
 
-<button onclick="pay()">💳 Pay</button>
+  <h3>الأصناف المميزة</h3>
+  <div class="items">
+    <div class="item">
+      🍔<br><b>برجر يونيك</b>
+      <p class="price">36 ر.س</p>
+      <button onclick="addItem('برجر يونيك',36)">+</button>
+    </div>
+    <div class="item">
+      🍝<br><b>باستا ترافل</b>
+      <p class="price">34 ر.س</p>
+      <button onclick="addItem('باستا ترافل',34)">+</button>
+    </div>
+    <div class="item">
+      🍕<br><b>بيتزا يونيك</b>
+      <p class="price">38 ر.س</p>
+      <button onclick="addItem('بيتزا يونيك',38)">+</button>
+    </div>
+  </div>
 
-<p id="result"></p>
+  <div class="card">
+    <b>عرض يونيك</b>
+    <p>خصم 20% على جميع الطلبات اليوم</p>
+    <button onclick="addItem('عرض يونيك',50)">اطلب الآن</button>
+  </div>
+
+  <button style="width:100%;" onclick="goPayment()">متابعة للدفع</button>
+
+  <div class="nav">
+    <span>حسابي</span>
+    <span>طلباتي</span>
+    <span style="color:#b78cff;">الرئيسية</span>
+  </div>
+</div>
+
+<!-- Payment Screen -->
+<div id="paymentScreen" class="hidden">
+  <h2 style="text-align:center;">الدفع</h2>
+
+  <div class="card">
+    <h3>ملخص الطلب</h3>
+    <div id="summary"></div>
+    <hr>
+    <p>المجموع الفرعي: <span id="subTotal">0</span> ر.س</p>
+    <p>رسوم التوصيل: <span id="deliveryFee">0</span> ر.س</p>
+    <p>الضريبة (15%): <span id="tax">0</span> ر.س</p>
+    <p class="total">الإجمالي: <span id="finalTotal">0</span> ر.س</p>
+  </div>
+
+  <h3>طريقة الدفع</h3>
+  <div class="paybox" onclick="selectPayment('نقدي')">💵 دفع نقدي<br><small>ادفع عند الاستلام</small></div>
+  <div class="paybox" onclick="selectPayment('إلكتروني')">💳 دفع إلكتروني<br><small>ادفع عن طريق البطاقة</small></div>
+
+  <p id="paymentText" style="color:#b78cff;"></p>
+
+  <button style="width:100%;" onclick="confirmOrder()">تأكيد الطلب</button>
+  <p id="done" style="text-align:center;color:#7CFC98;font-weight:bold;"></p>
+</div>
 
 </div>
 
 <script>
+let user="";
+let orderType="";
+let paymentMethod="";
+let cart=[];
+let total=0;
 
-let total = 0;
-let userName = "";
-
-function login() {
-    userName = document.getElementById("name").value;
-    if(userName === "") {
-        alert("Enter your name first!");
-    } else {
-        alert("Welcome " + userName);
-    }
+function login(){
+  user=document.getElementById("username").value;
+  if(user===""){
+    alert("اكتبي اسم المستخدم أولاً");
+    return;
+  }
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("homeScreen").classList.remove("hidden");
 }
 
-function addItem(price) {
-    total += price;
-    document.getElementById("total").innerText = "Total: " + total + " SAR";
+function selectType(type){
+  orderType=type;
+  document.getElementById("orderTypeText").innerText="نوع الطلب المختار: " + type;
 }
 
-function pay() {
-    if(total === 0) {
-        document.getElementById("result").innerText = "Please add items first!";
-        return;
-    }
-
-    document.getElementById("result").innerText =
-    "✅ Payment Confirmed! Thank you " + userName;
-
-    total = 0;
-    document.getElementById("total").innerText = "Total: 0 SAR";
+function addItem(name,price){
+  cart.push({name,price});
+  total+=price;
+  alert("تمت إضافة " + name);
 }
 
+function goPayment(){
+  if(orderType===""){
+    alert("اختاري نوع الطلب أولاً");
+    return;
+  }
+  if(cart.length===0){
+    alert("أضيفي صنف واحد على الأقل");
+    return;
+  }
+
+  document.getElementById("homeScreen").classList.add("hidden");
+  document.getElementById("paymentScreen").classList.remove("hidden");
+
+  let summary="";
+  cart.forEach(item=>{
+    summary += <p>${item.name} — ${item.price} ر.س</p>;
+  });
+
+  let delivery = orderType==="توصيل" ? 10 : 0;
+  let tax = (total * 0.15).toFixed(2);
+  let final = (total + delivery + Number(tax)).toFixed(2);
+
+  document.getElementById("summary").innerHTML=summary;
+  document.getElementById("subTotal").innerText=total;
+  document.getElementById("deliveryFee").innerText=delivery;
+  document.getElementById("tax").innerText=tax;
+  document.getElementById("finalTotal").innerText=final;
+}
+
+function selectPayment(method){
+  paymentMethod=method;
+  document.getElementById("paymentText").innerText="طريقة الدفع المختارة: " + method;
+}
+
+function confirmOrder(){
+  if(paymentMethod===""){
+    alert("اختاري طريقة الدفع");
+    return;
+  }
+  document.getElementById("done").innerText=
+  "✅ تم تأكيد الطلب بنجاح، شكراً " + user;
+}
 </script>
-
 </body>
 </html>
