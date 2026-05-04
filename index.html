@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>UNIQUE Restaurant</title>
+
 <style>
 body{
   margin:0;
-  font-family:Arial,Tahoma;
+  font-family: Arial, Tahoma;
   background:#07111f;
   color:white;
   display:flex;
@@ -21,8 +22,8 @@ body{
 .logo{
   text-align:center;
   color:#d9b48f;
-  font-size:32px;
-  letter-spacing:6px;
+  font-size:34px;
+  letter-spacing:7px;
   margin-top:35px;
 }
 .card{
@@ -57,21 +58,11 @@ button{
   margin:10px 0;
   background:#121f35;
 }
-.option:hover,.paybox:hover{
-  border-color:#8a5cff;
-}
-.items{
-  display:flex;
-  gap:10px;
-}
-.item{
-  flex:1;
-  text-align:center;
-}
-.price{
-  color:#d9b48f;
-}
-.hidden{display:none;}
+.option:hover,.paybox:hover{ border-color:#8a5cff; }
+.items{ display:flex; gap:10px; }
+.item{ flex:1; text-align:center; }
+.price{ color:#d9b48f; }
+.hidden{ display:none; }
 .total{
   color:#b78cff;
   font-size:24px;
@@ -93,6 +84,7 @@ button{
 <div id="loginScreen">
   <div class="logo">UNIQUE</div>
   <p style="text-align:center;color:#d9b48f;">RESTAURANT</p>
+
   <h2 style="text-align:center;">مرحباً بك</h2>
   <p style="text-align:center;color:#aaa;">سجل الدخول للمتابعة</p>
 
@@ -106,6 +98,7 @@ button{
 <!-- Home Screen -->
 <div id="homeScreen" class="hidden">
   <div class="logo">UNIQUE</div>
+  <p style="text-align:center;color:#d9b48f;">RESTAURANT</p>
 
   <div class="card">
     <b>📍 الموقع الحالي</b>
@@ -129,11 +122,13 @@ button{
       <p class="price">36 ر.س</p>
       <button onclick="addItem('برجر يونيك',36)">+</button>
     </div>
+
     <div class="item">
       🍝<br><b>باستا ترافل</b>
       <p class="price">34 ر.س</p>
       <button onclick="addItem('باستا ترافل',34)">+</button>
     </div>
+
     <div class="item">
       🍕<br><b>بيتزا يونيك</b>
       <p class="price">38 ر.س</p>
@@ -183,39 +178,42 @@ button{
 </div>
 
 <script>
-let user="";
-let orderType="";
-let paymentMethod="";
-let cart=[];
-let total=0;
+let user = "";
+let orderType = "";
+let paymentMethod = "";
+let cart = [];
+let total = 0;
 
 function login(){
-  user=document.getElementById("username").value;
-  if(user===""){
+  user = document.getElementById("username").value;
+
+  if(user === ""){
     alert("اكتبي اسم المستخدم أولاً");
     return;
   }
+
   document.getElementById("loginScreen").classList.add("hidden");
   document.getElementById("homeScreen").classList.remove("hidden");
 }
 
 function selectType(type){
-  orderType=type;
-  document.getElementById("orderTypeText").innerText="نوع الطلب المختار: " + type;
+  orderType = type;
+  document.getElementById("orderTypeText").innerText = "نوع الطلب المختار: " + type;
 }
 
-function addItem(name,price){
-  cart.push({name,price});
-  total+=price;
+function addItem(name, price){
+  cart.push({name, price});
+  total += price;
   alert("تمت إضافة " + name);
 }
 
 function goPayment(){
-  if(orderType===""){
+  if(orderType === ""){
     alert("اختاري نوع الطلب أولاً");
     return;
   }
-  if(cart.length===0){
+
+  if(cart.length === 0){
     alert("أضيفي صنف واحد على الأقل");
     return;
   }
@@ -223,35 +221,37 @@ function goPayment(){
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("paymentScreen").classList.remove("hidden");
 
-  let summary="";
-  cart.forEach(item=>{
+  let summary = "";
+  cart.forEach(item => {
     summary += <p>${item.name} — ${item.price} ر.س</p>;
   });
 
-  let delivery = orderType==="توصيل" ? 10 : 0;
+  let delivery = orderType === "توصيل" ? 10 : 0;
   let tax = (total * 0.15).toFixed(2);
   let final = (total + delivery + Number(tax)).toFixed(2);
 
-  document.getElementById("summary").innerHTML=summary;
-  document.getElementById("subTotal").innerText=total;
-  document.getElementById("deliveryFee").innerText=delivery;
-  document.getElementById("tax").innerText=tax;
-  document.getElementById("finalTotal").innerText=final;
+  document.getElementById("summary").innerHTML = summary;
+  document.getElementById("subTotal").innerText = total;
+  document.getElementById("deliveryFee").innerText = delivery;
+  document.getElementById("tax").innerText = tax;
+  document.getElementById("finalTotal").innerText = final;
 }
 
 function selectPayment(method){
-  paymentMethod=method;
-  document.getElementById("paymentText").innerText="طريقة الدفع المختارة: " + method;
+  paymentMethod = method;
+  document.getElementById("paymentText").innerText = "طريقة الدفع المختارة: " + method;
 }
 
 function confirmOrder(){
-  if(paymentMethod===""){
+  if(paymentMethod === ""){
     alert("اختاري طريقة الدفع");
     return;
   }
-  document.getElementById("done").innerText=
-  "✅ تم تأكيد الطلب بنجاح، شكراً " + user;
+
+  document.getElementById("done").innerText =
+    "✅ تم تأكيد الطلب بنجاح، شكراً " + user;
 }
 </script>
+
 </body>
 </html>
