@@ -6,198 +6,138 @@
 
 <style>
 body{
-  margin:0;
-  font-family:Arial,Tahoma;
-  background:#06111f;
-  color:white;
-  display:flex;
-  justify-content:center;
+    margin:0;
+    font-family:Arial;
+    background:#0b1320;
+    color:white;
+    text-align:center;
 }
-.app{
-  width:390px;
-  min-height:100vh;
-  background:#071426;
-  padding:22px;
+
+.container{
+    max-width:400px;
+    margin:auto;
+    padding:20px;
 }
-.logo{
-  text-align:center;
-  color:#d9b48f;
-  font-size:32px;
-  letter-spacing:6px;
-  margin:20px 0;
+
+h1{
+    color:#f4c27a;
 }
+
 .card{
-  background:#111d31;
-  border-radius:18px;
-  padding:16px;
-  margin:14px 0;
+    background:#111c2e;
+    padding:15px;
+    border-radius:15px;
+    margin:10px;
 }
-.row{
-  display:flex;
-  gap:10px;
-}
-.option,.item,.paybox{
-  background:#121f35;
-  border:1px solid #2b3855;
-  border-radius:16px;
-  padding:14px;
-  margin:8px 0;
-  text-align:center;
-}
-.option:hover,.paybox:hover{border-color:#8a5cff;}
-.item{flex:1;}
+
 button{
-  border:none;
-  border-radius:14px;
-  background:#7b4bd6;
-  color:white;
-  padding:12px 18px;
-  margin:6px;
-  cursor:pointer;
-  font-size:15px;
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(45deg,#ff6ec4,#7873f5);
+    color:white;
+    cursor:pointer;
 }
-.price{color:#d9b48f;}
-.total{
-  color:#b78cff;
-  font-size:25px;
-  font-weight:bold;
+
+.menu{
+    display:flex;
+    justify-content:space-around;
 }
-.hidden{display:none;}
+
+.hidden{
+    display:none;
+}
 </style>
+
 </head>
 
 <body>
-<div class="app">
 
-<div id="home">
-  <div class="logo">UNIQUE</div>
-  <p style="text-align:center;color:#d9b48f;">RESTAURANT</p>
+<div class="container">
 
-  <div class="card">
-    <b>📍 الموقع الحالي</b>
-    <p>شارع العليا، الرياض</p>
-    <button onclick="alert('تم تغيير الموقع')">تغيير الموقع</button>
-  </div>
+    <!-- LOGIN -->
+    <div id="loginPage">
+        <h1>UNIQUE</h1>
+        <p>تسجيل الدخول</p>
 
-  <h3>اختر نوع الطلب</h3>
-  <div class="row">
-    <div class="option" onclick="selectType('توصيل')">🛵<br>توصيل<br><small>يصل لباب بيتك</small></div>
-    <div class="option" onclick="selectType('سفري')">🛍️<br>سفري<br><small>استلام من المطعم</small></div>
-    <div class="option" onclick="selectType('محلي')">🍽️<br>محلي<br><small>تناول في المطعم</small></div>
-  </div>
-  <p id="typeText" style="color:#b78cff;"></p>
+        <input id="name" placeholder="اسمك"><br><br>
+        <input type="password" placeholder="الرمز"><br><br>
 
-  <h3>الأصناف المميزة</h3>
-  <div class="row">
-    <div class="item">
-      🍔<br><b>برجر يونيك</b>
-      <p class="price">36 ر.س</p>
-      <button onclick="addItem('برجر يونيك',36)">+</button>
+        <button onclick="login()">دخول</button>
     </div>
-    <div class="item">
-      🍝<br><b>باستا ترافل</b>
-      <p class="price">34 ر.س</p>
-      <button onclick="addItem('باستا ترافل',34)">+</button>
+
+    <!-- MENU -->
+    <div id="menuPage" class="hidden">
+
+        <h2>القائمة</h2>
+
+        <div class="menu">
+            <div class="card">
+                <p>🍔 برجر</p>
+                <p>36 ر.س</p>
+                <button onclick="addItem('burger',36)">+</button>
+            </div>
+
+            <div class="card">
+                <p>🍝 باستا</p>
+                <p>34 ر.س</p>
+                <button onclick="addItem('pasta',34)">+</button>
+            </div>
+
+            <div class="card">
+                <p>🥤 بيبسي</p>
+                <p>6 ر.س</p>
+                <button onclick="addItem('drink',6)">+</button>
+            </div>
+        </div>
+
+        <h3>طلبك</h3>
+        <p id="total">المجموع: 0 ر.س</p>
+
+        <button onclick="goToPayment()">الدفع</button>
     </div>
-    <div class="item">
-      🥤<br><b>بيبسي</b>
-      <p class="price">6 ر.س</p>
-      <button onclick="addItem('بيبسي',6)">+</button>
+
+    <!-- PAYMENT -->
+    <div id="paymentPage" class="hidden">
+
+        <h2>الدفع</h2>
+
+        <p id="finalTotal"></p>
+
+        <p>طريقة الدفع:</p>
+
+        <button onclick="confirmOrder()">تأكيد الطلب</button>
+
     </div>
-  </div>
-
-  <div class="card">
-    <b>عرض يونيك</b>
-    <p>خصم 20% على جميع الطلبات اليوم</p>
-    <button onclick="addItem('عرض يونيك',50)">اطلب الآن</button>
-  </div>
-
-  <button style="width:100%;" onclick="goPayment()">متابعة للدفع</button>
-</div>
-
-<div id="payment" class="hidden">
-  <h2 style="text-align:center;">الدفع</h2>
-
-  <div class="card">
-    <h3>ملخص الطلب</h3>
-    <div id="summary"></div>
-    <hr>
-    <p>المجموع الفرعي: <span id="subTotal">0</span> ر.س</p>
-    <p>رسوم التوصيل: <span id="deliveryFee">0</span> ر.س</p>
-    <p>الضريبة (15%): <span id="tax">0</span> ر.س</p>
-    <p class="total">الإجمالي: <span id="finalTotal">0</span> ر.س</p>
-  </div>
-
-  <h3>طريقة الدفع</h3>
-  <div class="paybox" onclick="selectPayment('نقدي')">💵 دفع نقدي<br><small>ادفع عند الاستلام</small></div>
-  <div class="paybox" onclick="selectPayment('إلكتروني')">💳 دفع إلكتروني<br><small>ادفع عن طريق البطاقة</small></div>
-
-  <p id="paymentText" style="color:#b78cff;"></p>
-
-  <button style="width:100%;" onclick="confirmOrder()">تأكيد الطلب</button>
-  <p id="done" style="text-align:center;color:#7CFC98;font-weight:bold;"></p>
-</div>
 
 </div>
 
 <script>
-let orderType="";
-let paymentMethod="";
-let cart=[];
-let total=0;
 
-function selectType(type){
-  orderType=type;
-  document.getElementById("typeText").innerText="نوع الطلب المختار: " + type;
+let total = 0;
+
+function login(){
+    document.getElementById("loginPage").classList.add("hidden");
+    document.getElementById("menuPage").classList.remove("hidden");
 }
 
 function addItem(name,price){
-  cart.push({name,price});
-  total+=price;
-  alert("تمت إضافة " + name);
+    total += price;
+    document.getElementById("total").innerText = "المجموع: " + total + " ر.س";
 }
 
-function goPayment(){
-  if(orderType===""){
-    alert("اختاري نوع الطلب أولاً");
-    return;
-  }
-  if(cart.length===0){
-    alert("أضيفي صنف واحد على الأقل");
-    return;
-  }
+function goToPayment(){
+    document.getElementById("menuPage").classList.add("hidden");
+    document.getElementById("paymentPage").classList.remove("hidden");
 
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("payment").classList.remove("hidden");
-
-  let summary="";
-  cart.forEach(item=>{
-    summary += <p>${item.name} — ${item.price} ر.س</p>;
-  });
-
-  let delivery = orderType==="توصيل" ? 10 : 0;
-  let tax = (total * 0.15).toFixed(2);
-  let final = (total + delivery + Number(tax)).toFixed(2);
-
-  document.getElementById("summary").innerHTML=summary;
-  document.getElementById("subTotal").innerText=total;
-  document.getElementById("deliveryFee").innerText=delivery;
-  document.getElementById("tax").innerText=tax;
-  document.getElementById("finalTotal").innerText=final;
-}
-
-function selectPayment(method){
-  paymentMethod=method;
-  document.getElementById("paymentText").innerText="طريقة الدفع المختارة: " + method;
+    document.getElementById("finalTotal").innerText = "الإجمالي: " + total + " ر.س";
 }
 
 function confirmOrder(){
-  if(paymentMethod===""){
-    alert("اختاري طريقة الدفع");
-    return;
-  }
-  document.getElementById("done").innerText="✅ تم تأكيد الطلب بنجاح";
+    alert("تم تأكيد الطلب ✅");
 }
+
 </script>
+
 </body>
 </html>
